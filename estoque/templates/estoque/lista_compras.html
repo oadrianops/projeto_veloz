@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque - Seu Raimundo</title>
+    <style>
+        /* Paleta de cores e estilo global */
+        :root {
+            --primary-color: #2563EB; /* Azul moderno */
+            --bg-color: #F3F4F6;      /* Fundo cinza claro */
+            --card-bg: #FFFFFF;       /* Fundo branco do card */
+            --text-main: #1F2937;     /* Texto principal escuro */
+            --text-muted: #6B7280;    /* Texto secundário */
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container principal (o "Card") */
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            margin: 20px;
+        }
+
+        /* Título da página */
+        h2 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 2px solid #E5E7EB;
+            padding-bottom: 15px;
+        }
+
+        /* Estilo da lista */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Estilo de cada item da lista */
+        li {
+            background-color: #F9FAFB;
+            border: 1px solid #E5E7EB;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Efeito ao passar o mouse por cima do item */
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-color: #D1D5DB;
+        }
+
+        /* Ícone de carrinho de supermercado antes do texto */
+        li::before {
+            content: "🛒";
+            margin-right: 15px;
+            font-size: 22px;
+        }
+
+        /* Estilo específico para quando a lista está vazia */
+        .empty-msg {
+            text-align: center;
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 30px;
+            background-color: transparent;
+            border: 2px dashed #D1D5DB;
+            justify-content: center;
+        }
+
+        .empty-msg::before {
+            content: "✨";
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Compras</h2>
+        <ul>
+            {% for item in compras %}
+                <!-- Mantém o formato exato exigido pelo desafio -->
+                <li>Comprar: {{ item.quantidade }} {{ item.unidade }} de {{ item.nome }}</li>
+            {% empty %}
+                <li class="empty-msg">Nenhum item precisa ser comprado no momento. O estoque está em dia!</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
