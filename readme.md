@@ -88,6 +88,10 @@ No Windows, com PowerShell:
 ```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
+
+# CASO OCORRER ERRO, EXECUTE ESSE COMANDO PARA ABRIR UMA EXCEÇÃO DE SEGURANÇA.
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\venv\Scripts\Activate.ps1
 ```
 
 **3. Instale as dependências**
