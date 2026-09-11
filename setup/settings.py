@@ -20,13 +20,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
+def env_list(nome, padrao=''):
+    """Lê uma variável de ambiente separada por vírgulas e devolve uma lista limpa."""
+    return [item.strip() for item in os.getenv(nome, padrao).split(',') if item.strip()]
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%x&hae!7g0c$_amm0r$x@#0^9s#@k+@i2-^!b&sk#etw^qy!3m'
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    'django-insecure-%x&hae!7g0c$_amm0r$x@#0^9s#@k+@i2-^!b&sk#etw^qy!3m',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Localmente o padrão é True, para o projeto rodar logo após o clone.
+# Em produção defina DEBUG=False nas variáveis de ambiente.
+DEBUG = os.getenv('DEBUG', 'True').strip().lower() in ('1', 'true', 'yes', 'on')
 
-ALLOWED_HOSTS = ['estoque.nandesk.com.br', '147.15.9.197']
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', 'localhost,127.0.0.1')
 
 
 # Application definition
@@ -119,7 +129,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-CSRF_TRUSTED_ORIGINS = ['https://estoque.nandesk.com.br']
+
+# Necessário apenas quando o projeto roda atrás de HTTPS, como na hospedagem.
+CSRF_TRUSTED_ORIGINS = env_list('CSRF_TRUSTED_ORIGINS')
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
